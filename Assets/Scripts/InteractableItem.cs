@@ -34,8 +34,10 @@ public class InteractableItem : MonoBehaviour {
 	    //make it do stuff!
         if (attachedWand && currentlyInteracting) {
             growScript.growNow = true;
+            print("grow reported");
         } else {
             growScript.growNow = false;
+            print("shrink reported");
         }
 	}
 
