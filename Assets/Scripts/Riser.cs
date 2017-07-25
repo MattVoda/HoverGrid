@@ -8,21 +8,34 @@ public class Riser : MonoBehaviour {
     public float riseDistanceMultiplier = 3f;
     public float time = 0.5f;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    private bool risen = false;
+
+    private SteamVR_Camera HMD;
+    private Vector3 HMDpos;
+    private Quaternion originalRotationValue;
+
+    // Use this for initialization
+    void Start () {
+        HMD = SteamVR_Render.Top();
+        originalRotationValue = gameObject.transform.rotation;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        HMDpos = HMD.transform.position;
+        if (risen) {
+            gameObject.transform.LookAt(HMDpos);
+        }
+    }
 
     public void StartRise() {
+        risen = true;
         StartCoroutine(Rise(true));
     }
     public void EndRise() {
+        risen = false;
         StartCoroutine(Rise(false));
+        gameObject.transform.rotation = originalRotationValue;
     }
 
     IEnumerator Rise(bool riseNow) {
